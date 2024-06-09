@@ -31,7 +31,6 @@ jobs:
       # Step 4: Lint the code to check for style errors and enforce coding standards
       - name: Lint code
         run: |
-          .\venv\Scripts\activate
           pip install flake8
           flake8 .
 

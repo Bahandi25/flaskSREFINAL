@@ -38,6 +38,7 @@ jobs:
     # The test job runs after the build job
     runs-on: windows-latest
     needs: build
+    if: always()
 
     steps:
       # Step 5: Checkout the code from the repository

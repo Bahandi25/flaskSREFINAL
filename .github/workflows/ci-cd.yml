@@ -60,7 +60,7 @@ jobs:
       - name: Run tests
         run: |
           pip install pytest
-          pytest tests/
+          pytest ./tests
 
   # deploy:
   #   # The deploy job runs after the test job and only on the main branch

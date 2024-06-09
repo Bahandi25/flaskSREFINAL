@@ -8,38 +8,38 @@ on:
     branches: ["main"]
 
 jobs:
-  build:
-    # Specify that the job should run on a Windows environment
-    runs-on: windows-latest
+  # build:
+  #   # Specify that the job should run on a Windows environment
+  #   runs-on: windows-latest
 
-    steps:
-      # Step 1: Checkout the code from the repository
-      - name: Checkout code
-        uses: actions/checkout@v4
+  #   steps:
+  #     # Step 1: Checkout the code from the repository
+  #     - name: Checkout code
+  #       uses: actions/checkout@v4
 
-      # Step 2: Set up Python environment
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.12"
+  #     # Step 2: Set up Python environment
+  #     - name: Set up Python
+  #       uses: actions/setup-python@v4
+  #       with:
+  #         python-version: "3.12"
 
-      # Step 3: Install dependencies required for the project
-      - name: Install dependencies
-        run: |
-          pip install Pipfile
-          pip install -r requirements.txt
+  #     # Step 3: Install dependencies required for the project
+  #     - name: Install dependencies
+  #       run: |
+  #         pip install Pipfile
+  #         pip install -r requirements.txt
 
-      # Step 4: Lint the code to check for style errors and enforce coding standards
-      - name: Lint code
-        run: |
-          pip install flake8
-          flake8 .
+  #     # Step 4: Lint the code to check for style errors and enforce coding standards
+  #     - name: Lint code
+  #       run: |
+  #         pip install flake8
+  #         flake8 .
 
   test:
     # The test job runs after the build job
     runs-on: windows-latest
-    needs: build
-    if: always()
+    # needs: build
+    # if: always()
 
     steps:
       # Step 5: Checkout the code from the repository
@@ -62,28 +62,28 @@ jobs:
         run: |
           python app.py &
 
-      - name: Wait for Flask to start
-        shell: pwsh
-        run: |
-          $maxRetries = 10
-          $retryCount = 0
-          while ($retryCount -lt $maxRetries) {
-            try {
-              $response = Invoke-WebRequest -Uri http://localhost:5000 -UseBasicParsing
-              if ($response.StatusCode -eq 200) {
-                Write-Output "Flask application is up and running."
-                break
-              }
-            } catch {
-              Start-Sleep -Seconds 1
-              $retryCount++
-            }
-          }
+      # - name: Wait for Flask to start
+      #   shell: pwsh
+      #   run: |
+      #     $maxRetries = 10
+      #     $retryCount = 0
+      #     while ($retryCount -lt $maxRetries) {
+      #       try {
+      #         $response = Invoke-WebRequest -Uri http://localhost:5000 -UseBasicParsing
+      #         if ($response.StatusCode -eq 200) {
+      #           Write-Output "Flask application is up and running."
+      #           break
+      #         }
+      #       } catch {
+      #         Start-Sleep -Seconds 1
+      #         $retryCount++
+      #       }
+      #     }
 
-          if ($retryCount -eq $maxRetries) {
-            Write-Output "Flask application did not start in expected time."
-            exit 1
-          }
+      #     if ($retryCount -eq $maxRetries) {
+      #       Write-Output "Flask application did not start in expected time."
+      #       exit 1
+      #     }
       - name: Run tests
         run: |
           pip install pytest

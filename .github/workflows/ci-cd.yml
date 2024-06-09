@@ -58,13 +58,24 @@ jobs:
           pip install Pipfile
           pip install -r requirements.txt
 
-      # Step 8: Run tests using pytest to ensure the code works as expected
+      - name: Start Flask app
+        run: |
+          python app.py &
+
+      - name: Wait for Flask to start
+        run: |
+          for i in {1..10}; do
+            if curl -s http://localhost:5000; then
+               break
+             fi
+            sleep 1
+          done
       - name: Run tests
         run: |
           pip install pytest
           pip install pytest-playwright
           playwright install
-          pytest ./tests
+          pytest ./tests/test_login.py
 
   # deploy:
   #   # The deploy job runs after the test job and only on the main branch

@@ -63,13 +63,27 @@ jobs:
           python app.py &
 
       - name: Wait for Flask to start
+        shell: pwsh
         run: |
-          for i in {1..10}; do
-            if curl -s http://localhost:5000; then
-               break
-             fi
-            sleep 1
-          done
+          $maxRetries = 10
+          $retryCount = 0
+          while ($retryCount -lt $maxRetries) {
+            try {
+              $response = Invoke-WebRequest -Uri http://localhost:5000 -UseBasicParsing
+              if ($response.StatusCode -eq 200) {
+                Write-Output "Flask application is up and running."
+                break
+              }
+            } catch {
+              Start-Sleep -Seconds 1
+              $retryCount++
+            }
+          }
+
+          if ($retryCount -eq $maxRetries) {
+            Write-Output "Flask application did not start in expected time."
+            exit 1
+          }
       - name: Run tests
         run: |
           pip install pytest

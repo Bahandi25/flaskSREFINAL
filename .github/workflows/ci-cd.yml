@@ -27,6 +27,7 @@ jobs:
       - name: Install dependencies
         run: |
           pip install Pipfile
+          pip install -r requirements.txt
 
       # Step 4: Lint the code to check for style errors and enforce coding standards
       - name: Lint code
@@ -55,11 +56,14 @@ jobs:
       - name: Install dependencies
         run: |
           pip install Pipfile
+          pip install -r requirements.txt
 
       # Step 8: Run tests using pytest to ensure the code works as expected
       - name: Run tests
         run: |
           pip install pytest
+          pip install pytest-playwright
+          playwright install
           pytest ./tests
 
   # deploy:

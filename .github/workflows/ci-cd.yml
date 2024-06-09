@@ -34,35 +34,32 @@ jobs:
           pip install flake8
           flake8 .
 
-  # test:
-  #   # The test job runs after the build job
-  #   runs-on: windows-latest
-  #   needs: build
+  test:
+    # The test job runs after the build job
+    runs-on: windows-latest
+    needs: build
 
-  #   steps:
-  #     # Step 5: Checkout the code from the repository
-  #     - name: Checkout code
-  #       uses: actions/checkout@v2
+    steps:
+      # Step 5: Checkout the code from the repository
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-  #     # Step 6: Set up Python environment
-  #     - name: Set up Python
-  #       uses: actions/setup-python@v2
-  #       with:
-  #         python-version: "3.12"
+      # Step 6: Set up Python environment
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.12"
 
-  #     # Step 7: Install dependencies required for the project
-  #     - name: Install dependencies
-  #       run: |
-  #         python -m venv venv
-  #         .\venv\Scripts\activate
-  #         pip install -r requirements.txt
+      # Step 7: Install dependencies required for the project
+      - name: Install dependencies
+        run: |
+          pip install Pipfile
 
-  #     # Step 8: Run tests using pytest to ensure the code works as expected
-  #     - name: Run tests
-  #       run: |
-  #         .\venv\Scripts\activate
-  #         pip install pytest
-  #         pytest
+      # Step 8: Run tests using pytest to ensure the code works as expected
+      - name: Run tests
+        run: |
+          pip install pytest
+          pytest tests/
 
   # deploy:
   #   # The deploy job runs after the test job and only on the main branch

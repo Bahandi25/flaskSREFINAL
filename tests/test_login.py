@@ -6,7 +6,7 @@ from constants import URL
 # Define a function that takes a playwright object as an argument
 def run(playwright: Playwright) -> None:
     # Launch a chromium browser in non-headless mode
-    browser = playwright.firefox.launch(headless=False)
+    browser = playwright.chromium.launch(headless=False)
     # Create a new browser context
     context = browser.new_context()
     # Create a new page in the context

@@ -9,4 +9,8 @@ scrape_configs:
 
   - job_name: "flaskblog"
     static_configs:
+      - targets: ["54.173.120.204:5000"]
+
+  - job_name: "flaskbloglocal"
+    static_configs:
       - targets: ["flaskblog-1:5000"]

@@ -84,7 +84,7 @@ jobs:
           USER: ubuntu
         run: |
           echo "${{ secrets.AWS_EC2_KEY }}" > mykey.pem
-          chmod 600 mykey.pem
+          chmod 400 mykey.pem
 
           ssh -o StrictHostKeyChecking=no -i "mykey.pem" $USER@$HOST << 'EOF'
             cd ./flaskSREFINAL

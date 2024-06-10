@@ -191,6 +191,7 @@ from modules import (
     returnUserProfilePicture,  # A function that returns the user's profile picture
 )
 
+from prometheus_flask_exporter import PrometheusMetrics
 # Create a Flask app object with the app name, root path, static folder and template folder
 app = Flask(
     import_name=APP_NAME,  # The name of the app
@@ -198,8 +199,7 @@ app = Flask(
     static_folder=STATIC_FOLDER,  # The folder where the static files(*.js/*.css) are stored
     template_folder=TEMPLATE_FOLDER,  # The folder where the Jinja(*.html.jinja) templates are stored
 )
-from flask import Flask, request
-from prometheus_flask_exporter import PrometheusMetrics
+
 
 metrics = PrometheusMetrics(app=app, path='/metrics')
 metrics.info('app_info', 'Application info', version='1.0.3')
@@ -461,7 +461,7 @@ match __name__:
         print(terminalASCII())
 
         # Run the app with the debug mode, host and port settings
-        app.run(debug=False, host=APP_HOST, port=APP_PORT)
+        app.run(debug=False, host="0.0.0.0", port=APP_PORT)
 
         # Get the end time of the app
         endTime = currentTimeStamp()

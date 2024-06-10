@@ -3,15 +3,15 @@ from constants import URL
 
 
 def run(playwright: Playwright) -> None:
-    browser = playwright.chromium.launch(headless=False)
+    browser = playwright.chromium.launch(headless=True)
     context = browser.new_context()
     page = context.new_page()
     page.goto(URL)
     page.get_by_role("button", name="").click()
     page.get_by_placeholder("username").click()
-    page.get_by_placeholder("username").fill("testuser")
+    page.get_by_placeholder("username").fill("TestUser2")
     page.get_by_placeholder("password").click()
-    page.get_by_placeholder("password").fill("testuser")
+    page.get_by_placeholder("password").fill("testuser2")
     page.get_by_role("button", name="Login").click()
     page.locator("div:nth-child(3) > a").first.click()
     page.get_by_role("link", name="settings").click()

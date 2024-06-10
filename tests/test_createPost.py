@@ -14,7 +14,7 @@ fileLocation = abspath(fileName).replace("\\", "\\")
 # Define a function that takes a playwright object as an argument
 def run(playwright: Playwright) -> None:
     # Launch a chromium browser in non-headless mode
-    browser = playwright.chromium.launch(headless=False)
+    browser = playwright.chromium.launch(headless=True)
     # Create a new browser context
     context = browser.new_context()
     # Create a new page in the context

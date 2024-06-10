@@ -64,34 +64,12 @@ jobs:
   #       env:
   #         FLASK_ENV: development
 
-  # - name: Wait for Flask to start
-  #   shell: pwsh
-  #   run: |
-  #     $maxRetries = 10
-  #     $retryCount = 0
-  #     while ($retryCount -lt $maxRetries) {
-  #       try {
-  #         $response = Invoke-WebRequest -Uri http://localhost:5000 -UseBasicParsing
-  #         if ($response.StatusCode -eq 200) {
-  #           Write-Output "Flask application is up and running."
-  #           break
-  #         }
-  #       } catch {
-  #         Start-Sleep -Seconds 1
-  #         $retryCount++
-  #       }
-  #     }
-
-  #     if ($retryCount -eq $maxRetries) {
-  #       Write-Output "Flask application did not start in expected time."
-  #       exit 1
-  #     }
-  # - name: Run tests
-  #   run: |
-  #     pip install pytest
-  #     pip install pytest-playwright
-  #     playwright install
-  #     pytest ./tests/test_login.py
+  #     - name: Run tests
+  #       run: |
+  #         pip install pytest
+  #         pip install pytest-playwright
+  #         playwright install
+  #         pytest ./tests/test_login.py
 
   deploy:
     # The deploy job runs after the test job and only on the main branch
@@ -118,7 +96,7 @@ jobs:
           chmod 400 key.pem
 
           ssh -o StrictHostKeyChecking=no -i key.pem $USER@$HOST << 'EOF'
-            cd /path/to/your/app
+            cd ./sreFINAL-
             git pull origin main
             pip install -r requirements.txt
           EOF
